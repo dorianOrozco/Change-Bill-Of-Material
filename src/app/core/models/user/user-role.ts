@@ -1,0 +1,1 @@
+export type UserRole = 'Admin' | 'Engineer' | 'Production' | 'PIC' | 'Procurement' | 'Guest';

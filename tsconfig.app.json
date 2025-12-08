@@ -8,7 +8,7 @@
   },
   "include": [
     "src/**/*.ts"
-  ],
+, "src/app/core/interceptors/error"  ],
   "exclude": [
     "src/**/*.spec.ts"
   ]
