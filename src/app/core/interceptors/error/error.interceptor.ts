@@ -20,7 +20,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
         } else if (error.status === 400) {
           notificationService.showError('Request Error', 'Invalid request parameters. If this issue persists take a screenshot of the page and contact your administrator.');
         } else if (error.status === 401) {
-          notificationService.showError('Unauthorized Error', 'You are not authorized to perform this action. If you believe this is a mistake, contact your administrator.');
+          notificationService.showError('Unauthorized Error', 'You are not authorized to perform this action. If you believe this is a mistake, try logging in again. If the issue persists, contact your administrator.');
         }  else if (error.status === 403) {
           notificationService.showError('Forbidden Error', 'You do not have permission to perform this action. If you believe this is a mistake, contact your administrator.');
         } else if (error.status === 404) {

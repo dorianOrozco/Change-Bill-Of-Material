@@ -1,4 +1,5 @@
 <app-dialog
+    [class]="'machine-create-dialog'"
     [(visible)]="visible"
     [maximizable]="true"
     (onHide)="closeDialog()"
@@ -9,62 +10,140 @@
     </div>
 
     <div dialogContent>
-        <form class="form" [formGroup]="machineForm">
+        @if (isLoadingData()) {
+            <div class="skeleton-container">
+                <div class="skeleton-group">
+                    <p-skeleton></p-skeleton>
+                    <p-skeleton class="skeleton-input"></p-skeleton>
+                </div>
+                
+                <div class="skeleton-group">
+                    <p-skeleton></p-skeleton>
+                    <p-skeleton class="skeleton-input"></p-skeleton>
+                </div>
 
-            <div class="form-group">
-                <label for="serialNo">Serial Number</label>            
-                <input 
-                    formControlName="serialNo" 
-                    id="serialNo"
-                    type="text" 
-                    placeholder="Enter serial number"
-                    pInputText 
-                    autofocus="true"
-                >
-            </div>
+                <div class="skeleton-group">
+                    <p-skeleton></p-skeleton>
+                    <p-skeleton class="skeleton-input"></p-skeleton>
+                </div>
 
-            <div class="form-group">
-                <label for="orderNo">Order Number</label>
-                <input 
-                    formControlName="orderNo" 
-                    id="orderNo"
-                    type="text"
-                    placeholder="Enter order number" 
-                    pInputText 
-                >
+                <div class="skeleton-group">
+                    <p-skeleton></p-skeleton>
+                    <p-skeleton class="skeleton-input"></p-skeleton>
+                </div>
             </div>
+        }
+        @else {
+            <form class="form" [formGroup]="machineForm">
+                <div class="form-group">
+                    <label for="serialNo">Serial Number</label>            
+                    
+                    @if (machineForm.get('serialNo')?.touched && machineForm.get('serialNo')?.invalid) {
+                        
+                        <div class="error-messages">
+                            @if(machineForm.get('serialNo')?.hasError('isTaken')) {
+                                <span> Serial number is already taken, enter another.</span>
+                            }
+                        </div>
+                    }
+                    
+                    <p-iconfield>
+                        <input 
+                        formControlName="serialNo" 
+                        id="serialNo"
+                        type="text" 
+                        placeholder="Enter serial number"
+                        pInputText 
+                        >
+                        @if (machineForm.get('serialNo')?.pending) {
+                            <p-inputicon class="pi pi-spinner pi-spin" pInputIcon/>
+                        }
+                    </p-iconfield>
+                </div>
+    
+                <div class="form-group">
+                    <label for="orderNo">Order Number</label>
 
-            <div class="form-group">
-                <label for="customer">Customer</label>
-                <input 
-                    formControlName="customer" 
-                    type="text" 
-                    id="customer"
-                    placeholder="Enter customer name"
-                    pInputText 
-                >
-            </div>
+                    @if (machineForm.get('orderNo')?.touched && machineForm.get('orderNo')?.invalid) {
+                        
+                        <div class="error-messages">
+                            @if(machineForm.get('orderNo')?.hasError('required')) {
+                                <span> Order number is required.</span>
+                            }
+                        </div>
+                    }
 
-            <div class="form-group">
-                <label for="machineClass">Machine Class</label>
-                <p-select 
-                    [options]="machineClasses()" 
-                    formControlName="machineClass"
-                    appendTo="body" 
-                    showClear="true"
-                    filter="true" 
-                    checkmark="true"
-                    optionLabel="class" 
-                    optionValue="id" 
-                    placeholder="Select machine class"> 
-                </p-select>
-            </div>
-        </form>
+                    <input 
+                        formControlName="orderNo" 
+                        id="orderNo"
+                        type="text"
+                        placeholder="Enter order number" 
+                        pInputText 
+                    >
+                </div>
+    
+                <div class="form-group">
+                    <label for="customer">Customer</label>
+
+                    @if (machineForm.get('customer')?.touched && machineForm.get('customer')?.invalid) {
+                        
+                        <div class="error-messages">
+                            @if(machineForm.get('customer')?.hasError('required')) {
+                                <span> Customer name is required.</span>
+                            }
+                        </div>
+                    }
+
+                    <input 
+                        formControlName="customer" 
+                        id="customer"
+                        type="text" 
+                        placeholder="Enter customer name"
+                        pInputText 
+                    >
+                </div>
+    
+                <div class="form-group">
+                    <label for="machineClass">Machine Class</label>
+
+                    @if (machineForm.get('machineClass')?.touched && machineForm.get('machineClass')?.invalid) {
+                        
+                        <div class="error-messages">
+                            @if(machineForm.get('machineClass')?.hasError('required')) {
+                                <span> Machine class is required.</span>
+                            }
+                        </div>
+                    }
+
+                    <p-select 
+                        [options]="machineClasses()" 
+                        formControlName="machineClass"
+                        appendTo="body" 
+                        showClear="true"
+                        filter="true" 
+                        checkmark="true"
+                        optionLabel="class" 
+                        optionValue="id" 
+                        placeholder="Select machine class"> 
+                    </p-select>
+
+
+                </div>
+            </form>
+        }
     </div>
 
     <div dialogFooter>
-        <p-button label="Cancel" (onClick)="closeDialog()" variant="text"></p-button>
-        <p-button label="Add Machine"></p-button>
+        <div class="footer">
+            <p-button label="Cancel" (onClick)="closeDialog()" variant="text"></p-button>
+            <p-button 
+                [label]="buttonLabel()" 
+                (onClick)="onSubmit()" 
+                [loading]="isSubmittingData()"
+                [disabled]="machineForm.invalid || isSubmittingData()"
+                type="button"> 
+            </p-button>
+        </div>
     </div>
 
     

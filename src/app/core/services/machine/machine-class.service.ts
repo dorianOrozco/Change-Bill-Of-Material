@@ -1,7 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { HttpService } from '../httpService';
 import { MachineClass } from '../../models/machine/machine-classes';
-import { NotificationService } from '../notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,14 +13,11 @@ export class MachineClassService {
   }
 
   machineClasses = signal<MachineClass[]>([]);
-
-
   
   async getMachineClassesDropdown(): Promise<MachineClass[]> {
     try {
         // const ctx = new HttpContext().set(SKIP_ERROR_ALERT, true);
-        //   try {
-        //     const classes = await this.http.get<MachineClass[]>(this.endpoints.machineClassDropdown, { context: ctx });
+        // const classes = await this.http.get<MachineClass[]>(this.endpoints.machineClassDropdown, { context: ctx });
         
         const classes = await this.http.get<MachineClass[]>(this.endpoints.machineClassDropdown);
         this.machineClasses.set(classes);
