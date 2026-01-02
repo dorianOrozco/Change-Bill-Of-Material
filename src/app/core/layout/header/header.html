@@ -1,0 +1,49 @@
+<p-menubar [model]="items()" class="menubar">
+    <ng-template #start>
+        <div class="menubar-start">
+            <!-- Conditional based on theme -->
+             <img [src]="logoPath()" alt="Haver & Boecker Logo"/>
+            <h3 class="menubar-title"> Change Bill of Material</h3>
+        </div>
+    </ng-template>
+
+
+    <ng-template #item let-item>
+        <p-button type="button" class="header-links" icon="{{item.icon}}" label="{{item.label}}" variant="text" [autofocus]="false"></p-button>
+    </ng-template>
+
+    <ng-template #end>
+        <div class="menubar-end">
+            <p>Welcome Back, User </p>
+
+            <p-select 
+                [options]="themeService.themeOptions"
+                optionLabel="name"
+                optionValue="value"
+                [(ngModel)]="themeService.preference">
+                    <ng-template #selectedItem let-option>
+                        <div class="theme-value">
+                            <i [class]="themeService.getThemeIcon(themeService.preference())"></i>
+                            <span>{{themeService.getThemeName(themeService.preference())}}</span>
+                        </div>
+                    </ng-template>
+                    
+                    <ng-template #item let-option>
+                        <div class="theme-option">
+                            <i [class]="themeService.getThemeIcon(option.value)"></i>
+                            <span>{{option.name}}</span>
+                        </div>
+                    </ng-template>
+            </p-select>
+
+            <p-button class="user-avatar" (onClick)="account.toggle($event)" label="D" ></p-button>    
+        </div>
+        
+        <p-popover #account appendTo="body" [dismissable]="true" styleClass="account-popover">
+            <div class="account-menu">
+                <p-menu [model]="userItems()"></p-menu>
+            </div>
+        </p-popover>
+    </ng-template>
+
+</p-menubar>

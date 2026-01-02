@@ -1,0 +1,13 @@
+<app-machine-toolbar
+(btnImport)="onImportDetection()"
+(btnCreateMachine)="onCreateMachineDetection()">
+</app-machine-toolbar>
+
+<!-- Toggled by toolbar -->
+<app-machine-import-drawer
+[(visible)]="importDrawerVisible">
+</app-machine-import-drawer>
+
+<app-machine-create-dialog
+[(visible)]="createMachineDialogVisible">
+</app-machine-create-dialog>

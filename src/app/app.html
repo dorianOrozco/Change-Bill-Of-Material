@@ -1,14 +1,2 @@
-
-@if(loading.isLoading()) {
-    <p>LOADING</p>
-}
-
-@for(item of ecbm.ecbmList(); track ecbm.ecbmList()) {
-    <p> {{ ecbm.ecbmList()}}</p>
-}
-
-<p-button (onClick)="awd()" label="fetch"/>
-
-<router-outlet />
-
+<app-shell></app-shell>
 

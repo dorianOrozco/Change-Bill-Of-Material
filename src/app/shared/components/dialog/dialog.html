@@ -1,0 +1,18 @@
+<p-dialog
+    [style]="{ minWidth: '300px', minHeight: '300px' }"
+    [(visible)]="visible"
+    [header]="heading()"
+    [position]="position()"
+    (onHide)="onHide.emit()"
+    [maximizable]="maximizable()">
+   
+    <ng-template #header>
+        <ng-content select="[dialogHeader]"></ng-content>
+    </ng-template>
+
+    <ng-content select="[dialogContent]"></ng-content>
+
+    <ng-template #footer>
+        <ng-content select="[dialogFooter]"></ng-content>
+    </ng-template>
+</p-dialog>

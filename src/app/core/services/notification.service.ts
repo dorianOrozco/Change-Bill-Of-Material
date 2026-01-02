@@ -1,38 +1,36 @@
-import { Injectable, signal } from "@angular/core";
+import { Injectable, inject } from '@angular/core';
+import { MessageService } from 'primeng/api';
 
 export interface AppToast {
-    severity: 'success' | 'info' | 'warn' | 'error';
-    title: string;
-    message: string;
+  severity: 'success' | 'info' | 'warn' | 'error';
+  title: string;   // maps to summary
+  message: string; // maps to detail
 }
 
 @Injectable({ providedIn: 'root' })
 export class NotificationService {
-    public messages = signal<AppToast[]>([]);;
-    
-    // Update our array to include the new message 
+    private messageService = inject(MessageService);
+    private TOAST_KEY: string = 'app';
+    private LIFE: number = 12000;
+
+
     showSuccess(title: string, message: string) {
-        this.messages.update(current => [...current, { severity: 'success', title, message }]);
+        this.messageService.add({ key: this.TOAST_KEY, severity: 'success', summary: title, detail: message, life: this.LIFE, });
     }
-    
+
     showError(title: string, message: string) {
-        this.messages.update(current => [...current, { severity: 'error', title, message }]);
+        this.messageService.add({ key: this.TOAST_KEY, severity: 'error', summary: title, detail: message, life: this.LIFE, });
     }
-    
+
     showInfo(title: string, message: string) {
-        this.messages.update(current => [...current, { severity: 'info', title, message }]);
+        this.messageService.add({ key: this.TOAST_KEY, severity: 'info', summary: title, detail: message, life: this.LIFE, });
     }
-    
+
     showWarn(title: string, message: string) {
-        this.messages.update(current => [...current, { severity: 'warn', title, message }]);
+        this.messageService.add({ key: this.TOAST_KEY, severity: 'warn', summary: title, detail: message, life: this.LIFE, });
     }
 
-    // Clear our toast array by overwriting it with an empty array
     clear() {
-        this.messages.set([]);
-    }
-
-    removeLast() {
-        this.messages.update(current => current.slice(0, -1));
+        this.messageService.clear(this.TOAST_KEY);
     }
 }

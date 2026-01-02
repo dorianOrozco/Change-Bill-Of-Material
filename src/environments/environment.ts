@@ -1,4 +1,4 @@
 export const environment = {
     production: false,
-    pocketBaseUrl: 'http://127.0.0.1:8090/api/collections'
+    url: 'https://localhost:7163/api'
 }

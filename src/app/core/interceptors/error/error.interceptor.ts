@@ -10,7 +10,6 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(req).pipe(
     catchError(error => {
-
       // If our custom flag is set to true, skip the error alerts
       if (!skip) {
         // If the user is offline (not connected to the internet)

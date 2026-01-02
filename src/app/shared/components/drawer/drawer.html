@@ -1,0 +1,21 @@
+<p-drawer [styleClass]="styleClass()"
+    [(visible)]="visible"
+    [position]="position()"
+    [modal]="modal()"
+    [dismissible]="dismissible()"
+    [closeOnEscape]="closeOnEscape()"
+    (onShow)="onShow.emit()"
+    (onHide)="onHide.emit()">
+
+    <ng-template #header>
+        <ng-content select="[drawerHeader]"></ng-content>   <!-- Used by adding drawerHeader to div-->
+    </ng-template>
+
+    <ng-template #content>
+        <ng-content select="[drawerContent]"></ng-content>
+    </ng-template>
+
+    <ng-template #footer>
+        <ng-content select="[drawerFooter]"></ng-content>
+    </ng-template>
+</p-drawer>

@@ -1,0 +1,71 @@
+<app-dialog
+    [(visible)]="visible"
+    [maximizable]="true"
+    (onHide)="closeDialog()"
+    [position]="'bottomright'">
+
+    <div dialogHeader>
+        <h2>Add Machine</h2>
+    </div>
+
+    <div dialogContent>
+        <form class="form" [formGroup]="machineForm">
+
+            <div class="form-group">
+                <label for="serialNo">Serial Number</label>            
+                <input 
+                    formControlName="serialNo" 
+                    id="serialNo"
+                    type="text" 
+                    placeholder="Enter serial number"
+                    pInputText 
+                    autofocus="true"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="orderNo">Order Number</label>
+                <input 
+                    formControlName="orderNo" 
+                    id="orderNo"
+                    type="text"
+                    placeholder="Enter order number" 
+                    pInputText 
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="customer">Customer</label>
+                <input 
+                    formControlName="customer" 
+                    type="text" 
+                    id="customer"
+                    placeholder="Enter customer name"
+                    pInputText 
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="machineClass">Machine Class</label>
+                <p-select 
+                    [options]="machineClasses()" 
+                    formControlName="machineClass"
+                    appendTo="body" 
+                    showClear="true"
+                    filter="true" 
+                    checkmark="true"
+                    optionLabel="class" 
+                    optionValue="id" 
+                    placeholder="Select machine class"> 
+                </p-select>
+            </div>
+        </form>
+    </div>
+
+    <div dialogFooter>
+        <p-button label="Cancel" (onClick)="closeDialog()" variant="text"></p-button>
+        <p-button label="Add Machine"></p-button>
+    </div>
+
+    
+</app-dialog>

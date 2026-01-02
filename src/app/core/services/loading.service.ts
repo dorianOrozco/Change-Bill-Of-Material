@@ -1,17 +1,17 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, signal, WritableSignal } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoadingService {
-    // Global loading state 
-    isLoading = signal(false);
+    // Global loading state should be determined by the interceptor which retrieves the value from the method
+    public isLoading: WritableSignal<boolean> = signal(false);
 
-    show() {
+    show(): void {
         this.isLoading.set(true);
     }
 
-    hide() {
+    hide(): void {
         this.isLoading.set(false);
     }
 }

@@ -1,0 +1,79 @@
+<p-toolbar [class]="'toolbar ' + styleClass()"> 
+    @if (showSearch()) {
+        <div class="search-container">
+            <p-iconfield iconPosition="left">
+                <p-inputicon class="pi pi-search"/>
+                <input
+                    type="text"
+                    pInputText
+                    fluid
+                    [placeholder]="searchPlaceholder()"
+                    [value]="searchValue()"
+                    (input)="onSearchChange($event)"/>
+            </p-iconfield>
+        </div>
+    }
+    @if (startActions().length > 0) {
+        <div class="action-container">
+            @for (action of startActions(); track action.id || $index) {
+                @if (action.type === 'split') {
+                    <p-splitbutton
+                        [label]="action.label"
+                        [icon]="action.icon"
+                        [model]="action.model || []"
+                        [severity]="action.severity"
+                        [text]="action.text"
+                        [outlined]="action.outlined"
+                        [disabled]="action.disabled"
+                        [pTooltip]="action.tooltip"
+                        (onClick)="action.command?.($event)">
+                    </p-splitbutton>
+                } @else {
+                    <p-button
+                        [label]="action.label"
+                        [icon]="action.icon"
+                        [severity]="action.severity"
+                        [text]="action.text"
+                        [outlined]="action.outlined"
+                        [styleClass]="action.styleClass"
+                        [disabled]="action.disabled"
+                        [pTooltip]="action.tooltip"
+                        (onClick)="handleActionClick(action, $event)">
+                    </p-button>
+                }
+            }
+        </div>
+    }
+    @if (endActions().length > 0) {
+        <div class="create-container">
+            @for (action of endActions(); track action.id || $index) {
+                @if (action.type === 'split') {
+                    <p-splitbutton
+                        [label]="action.label"
+                        [icon]="action.icon"
+                        [model]="action.model || []"
+                        [severity]="action.severity"
+                        [text]="action.text"
+                        [outlined]="action.outlined"
+                        [class]="action.styleClass"
+                        [disabled]="action.disabled"
+                        [pTooltip]="action.tooltip"
+                        (onClick)="action.command?.($event)">
+                    </p-splitbutton>
+                } @else {
+                    <p-button
+                        [label]="action.label"
+                        [icon]="action.icon"
+                        [severity]="action.severity"
+                        [text]="action.text"
+                        [outlined]="action.outlined"
+                        [class]="action.styleClass"
+                        [disabled]="action.disabled"
+                        [pTooltip]="action.tooltip"
+                        (onClick)="handleActionClick(action, $event)">
+                    </p-button>
+                }
+            }
+        </div>
+    }
+</p-toolbar>
